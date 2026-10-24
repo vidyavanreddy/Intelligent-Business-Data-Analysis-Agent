@@ -190,13 +190,17 @@ def extract_time(question, columns):
 
     for column in columns:
         column_lower = column.lower()
+        col_clean = column_lower.replace("_", " ")
 
-        if column_lower in time_keywords:
-            return column
+        # 1. Exact match for column name in question
+        if re.search(r"\b" + re.escape(column_lower) + r"\b", question_lower) or \
+           re.search(r"\b" + re.escape(col_clean) + r"\b", question_lower.replace("_", " ")):
+            if column_lower in time_keywords or any(k in column_lower for k in time_keywords):
+                return column
 
-        if column_lower in question_lower and any(
-            keyword in column_lower for keyword in time_keywords
-        ):
-            return column
+        # 2. If a time keyword is mentioned in question and column is a time column
+        if any(k in column_lower for k in time_keywords) or column_lower in time_keywords:
+            if any(re.search(r"\b" + re.escape(k) + r"\b", question_lower) for k in time_keywords):
+                return column
 
     return None
