@@ -129,16 +129,36 @@ Open **`http://localhost:8501`** in your browser.
 
 ---
 
+## 💡 What Inputs Can You Give? (Supported Query Formats)
+
+The agent’s Natural Language Understanding (NLU) engine automatically parses diverse conversational and analytical styles:
+
+| Query Style | Example Query | How the Agent Interprets It |
+|---|---|---|
+| **Direct Metric / Bare Column** | `net_profit` or `Revenue` | Automatically computes comprehensive summary statistics (Count, Mean, Min, Max, Standard Deviation, Spread). |
+| **Conversational Phrasing** | `what is net profit` or `give me Revenue` | Identifies metric and generates executive summary metrics. |
+| **Aggregations** | `total net_profit`, `average Revenue`, `max Sales` | Computes scalar aggregation (`sum`, `mean`, `max`, `min`) with business takeaway. |
+| **Categorical Breakdowns** | `net_profit by Department` or `Revenue by Region` | Computes grouped aggregation, identifies highest and lowest performers, and generates interactive bar chart. |
+| **Time-Series Trends** | `Revenue trend over Quarter` or `Sales trend over Date` | Sorts chronologically, computes period-over-period direction, and renders line plot. |
+| **Statistical Distributions** | `show distribution of net_profit` or `histogram of Annual_Income` | Computes skewness, outliers, spread, and renders histogram distribution plot. |
+| **Correlations & Relationships** | `relationship between Revenue and Net_Profit` | Computes Pearson correlation coefficient and evaluates positive/negative linear strength. |
+| **Multi-Turn Context Follow-Ups** | First: `Total Revenue by Department`<br>Then: `What about Net_Profit?`<br>Then: `What about by Region?` | Retains active state from previous turns and automatically carries forward metrics/dimensions seamlessly. |
+
+> [!TIP]
+> If a query contains typos or unknown terms, the agent gracefully recovers by presenting available columns and suggested query templates rather than failing.
+
+---
+
 ## 🧪 Testing & Verification
 
-The project includes 51 unit tests covering NLU, planning, code generation, execution recovery, and multi-turn context resolution:
+The project includes 56 unit tests covering NLU, planning, code generation, execution recovery, and multi-turn context resolution:
 
 ```powershell
 # Run the complete test suite
 python -m unittest discover -s tests
 ```
 
-- **Test Suite Results:** 51 tests, 0 failures, 100% pass rate.
+- **Test Suite Results:** 56 tests, 0 failures, 100% pass rate.
 - View the complete test catalog in [outputs/TEST_CASES_CATALOG.md](outputs/TEST_CASES_CATALOG.md).
 - View verified end-to-end execution logs and generated plots in [outputs/sample_analysis_outputs.md](outputs/sample_analysis_outputs.md).
 
