@@ -3,14 +3,14 @@ from .followup_detector import FollowUpDetector
 from .context_resolver import ContextResolver
 
 class ConversationContext:
+    """Coordinates memory, follow-up detection, and context resolution across multi-turn interactions."""
 
     def __init__(self, memory):
         self.memory = memory
         self.detector = FollowUpDetector()
         self.resolver = ContextResolver()
 
-    def resolve_question(self, question):
-
+    def resolve_question(self, question, columns=None):
         previous_question = self.memory.get_previous_question()
 
         is_follow_up = self.detector.is_follow_up(
@@ -21,7 +21,8 @@ class ConversationContext:
         if is_follow_up:
             resolved_question = self.resolver.resolve(
                 question,
-                previous_question
+                previous_question,
+                columns=columns
             )
 
             return {

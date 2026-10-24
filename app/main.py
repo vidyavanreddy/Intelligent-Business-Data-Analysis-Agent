@@ -107,7 +107,10 @@ if analyze_button:
 
         if uploaded_file is not None:
 
-            context = conversation_context.resolve_question(question)
+            context = conversation_context.resolve_question(
+                question,
+                columns=df.columns.tolist()
+            )
 
             if context["is_follow_up"]:
                 st.info(
@@ -150,7 +153,8 @@ if analyze_button:
                     agent_state.execution_result["result"],
                     agent_state.interpretation,
                     context["is_follow_up"],
-                    context["original_question"]
+                    context["original_question"],
+                    analysis_plan=agent_state.analysis_plan.to_dict() if agent_state.analysis_plan else None
                 )
 
                 if agent_state.visualization is not None:

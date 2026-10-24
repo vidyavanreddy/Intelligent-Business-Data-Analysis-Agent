@@ -1,7 +1,7 @@
 class FollowUpDetector:
+    """Detects whether a user prompt is an elliptical follow-up referencing prior conversation context."""
 
     def is_follow_up(self, question, previous_question=None):
-
         if previous_question is None:
             return False
 
@@ -22,17 +22,23 @@ class FollowUpDetector:
             "and sales",
             "and profit",
             "what about the",
-            "how about the"
+            "how about the",
+            "what about by",
+            "how about by",
+            "now by",
+            "now show",
+            "break down by",
+            "break it down by"
         ]
 
         for phrase in follow_up_phrases:
             if question.startswith(phrase):
                 return True
 
-        # Short questions are often follow-ups when they
-        # refer directly to the previous analysis.
-        if len(question.split()) <= 4:
-            if question.startswith(("and ", "also ", "what about ", "how about ")):
+        # Short questions (<= 5 words) starting with conversational connectors or prepositions
+        words = question.split()
+        if len(words) <= 5:
+            if question.startswith(("and ", "also ", "what about ", "how about ", "by ", "per ", "in ", "for ")):
                 return True
 
         return False

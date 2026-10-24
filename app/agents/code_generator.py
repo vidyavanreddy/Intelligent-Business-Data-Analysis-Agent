@@ -58,6 +58,10 @@ def generate_code(plan):
 
             return f'result = {data}["{target_column}"].count()'
 
+        elif operation == "median":
+
+            return f'result = {data}["{target_column}"].median()'
+
         else:
 
             raise ValueError("Unsupported aggregation operation.")
@@ -106,6 +110,13 @@ def generate_code(plan):
             return (
                 f'result = {data}.groupby("{group_by}")'
                 f'["{target_column}"].count()'
+            )
+
+        elif operation == "median":
+
+            return (
+                f'result = {data}.groupby("{group_by}")'
+                f'["{target_column}"].median()'
             )
 
         else:

@@ -1,3 +1,5 @@
+import pandas as pd
+
 try:
     from .agent_state import AgentState
     from ..nlu.question_parser import parse_question
@@ -102,72 +104,142 @@ class AnalysisAgent:
 
             execution = retry_execution
         
-        self.state.interpretation = self.interpreter.interpret(
-            execution["result"]
-        )
+        plan_dict = self.state.analysis_plan.to_dict()
+        analysis_type = self.state.analysis_plan.analysis_type
+        target_col = self.state.analysis_plan.target_column
+        group_col = self.state.analysis_plan.group_by
+        operation = self.state.analysis_plan.operation
+        filter_cond = self.state.analysis_plan.filter
+        result_val = execution["result"]
 
-        self.state.business_insight = (
-            self.interpreter.combine_interpretation_and_insight(
-                self.state.interpretation,
-                self.interpreter.generate_business_insight(
+        if analysis_type == "grouped_aggregation":
+            self.state.interpretation = self.interpreter.interpret_grouped(
+                result_val,
+                operation,
+                group_col,
+                target_col
+            )
+            insight = self.interpreter.generate_grouped_insight(
+                result_val,
+                operation,
+                group_col,
+                target_col
+            )
+            self.state.business_insight = (
+                self.interpreter.combine_interpretation_and_insight(
                     self.state.interpretation,
-                    self.state.analysis_plan.operation,
-                    self.state.analysis_plan.target_column,
-                    self.state.analysis_plan.analysis_type,
-                    self.state.analysis_plan.group_by,
-                    self.state.analysis_plan.filter
+                    insight
                 )
             )
-        )
 
-        if self.state.analysis_plan.analysis_type == "grouped_aggregation":
-            result = execution["result"]
+            try:
+                if isinstance(result_val, pd.Series):
+                    visualization_data = result_val.reset_index()
+                    if len(visualization_data.columns) >= 2:
+                        visualization_data.columns = [group_col, target_col]
+                elif isinstance(result_val, pd.DataFrame):
+                    visualization_data = result_val.reset_index() if result_val.index.name else result_val.copy()
+                else:
+                    visualization_data = pd.DataFrame(result_val)
 
-            visualization_data = result.reset_index()
+                self.state.visualization = create_visualization(
+                    visualization_data,
+                    "comparison",
+                    group_col,
+                    target_col
+                )
+            except Exception:
+                self.state.visualization = None
 
-            self.state.visualization = create_visualization(
-                visualization_data,
-                "comparison",
-                self.state.analysis_plan.group_by,
-                self.state.analysis_plan.target_column
+        elif analysis_type == "trend":
+            self.state.interpretation = self.interpreter.interpret_trend(
+                result_val,
+                target_col
+            )
+            insight = self.interpreter.generate_trend_insight(
+                result_val,
+                target_col
+            )
+            self.state.business_insight = (
+                self.interpreter.combine_interpretation_and_insight(
+                    self.state.interpretation,
+                    insight
+                )
             )
 
-        elif self.state.analysis_plan.analysis_type == "distribution":
-            metric = self.state.analysis_plan.target_column
+            try:
+                visualization_data = result_val.reset_index() if hasattr(result_val, "reset_index") else pd.DataFrame(result_val)
+                self.state.visualization = create_visualization(
+                    visualization_data,
+                    "trend",
+                    self.state.analysis_plan.time,
+                    target_col
+                )
+            except Exception:
+                self.state.visualization = None
 
-            visualization_data = self.state.dataset[[metric]]
+        elif analysis_type == "relationship":
+            self.state.interpretation = self.interpreter.interpret_relationship(
+                result_val,
+                target_col,
+                group_col
+            )
+            corr_val = None
+            if hasattr(result_val, "loc") and target_col in result_val.index and group_col in result_val.columns:
+                corr_val = result_val.loc[target_col, group_col]
 
-            self.state.visualization = create_visualization(
-                visualization_data,
-                "distribution",
-                y_column=metric
+            insight = self.interpreter.generate_relationship_insight(
+                corr_val,
+                target_col,
+                group_col
+            )
+            self.state.business_insight = (
+                self.interpreter.combine_interpretation_and_insight(
+                    self.state.interpretation,
+                    insight
+                )
             )
 
-        elif self.state.analysis_plan.analysis_type == "trend":
-            result = execution["result"]
+            try:
+                visualization_data = self.state.dataset[[group_col, target_col]]
+                self.state.visualization = create_visualization(
+                    visualization_data,
+                    "relationship",
+                    group_col,
+                    target_col
+                )
+            except Exception:
+                self.state.visualization = None
 
-            visualization_data = result.reset_index()
-
-            self.state.visualization = create_visualization(
-                visualization_data,
-                "trend",
-                self.state.analysis_plan.time,
-                self.state.analysis_plan.target_column
+        else:
+            self.state.interpretation = self.interpreter.interpret_from_plan(
+                result_val,
+                plan_dict
+            )
+            insight = self.interpreter.generate_business_insight(
+                self.state.interpretation,
+                operation,
+                target_col,
+                analysis_type,
+                group_col,
+                filter_cond
+            )
+            self.state.business_insight = (
+                self.interpreter.combine_interpretation_and_insight(
+                    self.state.interpretation,
+                    insight
+                )
             )
 
-        elif self.state.analysis_plan.analysis_type == "relationship":
-            x_column = self.state.analysis_plan.group_by
-            y_column = self.state.analysis_plan.target_column
-
-            visualization_data = self.state.dataset[
-                [x_column, y_column]
-            ]
-
-            self.state.visualization = create_visualization(
-                visualization_data,
-                "relationship",
-                x_column,
-                y_column
-            )
+            if analysis_type == "distribution":
+                try:
+                    visualization_data = self.state.dataset[[target_col]]
+                    self.state.visualization = create_visualization(
+                        visualization_data,
+                        "distribution",
+                        y_column=target_col
+                    )
+                except Exception:
+                    self.state.visualization = None
 
         return self.state

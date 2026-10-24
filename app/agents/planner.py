@@ -22,15 +22,3 @@ def create_analysis_plan(nlu_result):
     )
 
     return plan
-    analysis_type = determine_analysis_type(intent, group_by)
-
-    plan = AnalysisPlan(
-        analysis_type=analysis_type,
-        target_column=target_column,
-        group_by=group_by,
-        operation=operation,
-        filter=filter,
-        time=time
-    )
-
-    return plan

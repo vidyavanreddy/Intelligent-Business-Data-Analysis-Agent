@@ -241,7 +241,11 @@ class ResultInterpreter:
                 f"{column1} and {column2}."
             )
 
-        correlation = result.loc[column1, column2]
+        corr_val = result.loc[column1, column2]
+        if hasattr(corr_val, "iloc"):
+            correlation = float(corr_val.iloc[0, 0] if hasattr(corr_val, "shape") and len(corr_val.shape) > 1 else corr_val.iloc[0])
+        else:
+            correlation = float(corr_val)
 
         if correlation >= 0.7:
             strength = "strong positive"
