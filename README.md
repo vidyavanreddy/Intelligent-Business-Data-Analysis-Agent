@@ -108,8 +108,8 @@ flowchart TD
 git clone https://github.com/vidyavanreddy/Intelligent-Business-Data-Analysis-Agent.git
 cd Intelligent-Business-Data-Analysis-Agent
 
-# Create and activate a virtual environment
-python -m venv .venv
+# Create virtual environment with Python 3.10+ (recommended)
+py -3.10 -m venv .venv
 .\.venv\Scripts\Activate.ps1    # On Windows
 # source .venv/bin/activate     # On Linux / macOS
 ```

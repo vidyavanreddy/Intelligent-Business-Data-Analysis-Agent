@@ -24,9 +24,9 @@ cd /path/to/Intelligent-Business-Data-Analysis-Agent
 ### Step B: Create a Virtual Environment
 It is strongly recommended to isolate dependencies inside a virtual environment:
 
-**Windows (PowerShell):**
+**Windows (PowerShell - recommended using Python 3.10+):**
 ```powershell
-python -m venv .venv
+py -3.10 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
