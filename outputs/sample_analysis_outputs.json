@@ -1,6 +1,6 @@
 {
   "datasets": {
-    "test_sales.csv": {
+    "data/test_sales.csv": {
       "profile": {
         "rows": 5,
         "columns": 4,
@@ -42,7 +42,7 @@
         "constant_columns": []
       }
     },
-    "trend_sales.csv": {
+    "data/trend_sales.csv": {
       "profile": {
         "rows": 5,
         "columns": 3,
@@ -78,80 +78,275 @@
         "empty_columns": [],
         "constant_columns": []
       }
+    },
+    "data/ecommerce_customer_churn.csv": {
+      "profile": {
+        "rows": 30,
+        "columns": 9,
+        "column_names": [
+          "CustomerID",
+          "Customer_Segment",
+          "Age",
+          "Region",
+          "Annual_Income",
+          "Total_Spend",
+          "Orders_Count",
+          "Satisfaction_Score",
+          "Churn_Status"
+        ],
+        "data_types": {
+          "CustomerID": "object",
+          "Customer_Segment": "object",
+          "Age": "int64",
+          "Region": "object",
+          "Annual_Income": "int64",
+          "Total_Spend": "int64",
+          "Orders_Count": "int64",
+          "Satisfaction_Score": "float64",
+          "Churn_Status": "object"
+        },
+        "missing_values": {
+          "CustomerID": 0,
+          "Customer_Segment": 0,
+          "Age": 0,
+          "Region": 0,
+          "Annual_Income": 0,
+          "Total_Spend": 0,
+          "Orders_Count": 0,
+          "Satisfaction_Score": 0,
+          "Churn_Status": 0
+        },
+        "duplicate_rows": "0"
+      },
+      "column_classification": {
+        "CustomerID": "categorical",
+        "Customer_Segment": "categorical",
+        "Age": "numerical",
+        "Region": "categorical",
+        "Annual_Income": "numerical",
+        "Total_Spend": "numerical",
+        "Orders_Count": "numerical",
+        "Satisfaction_Score": "numerical",
+        "Churn_Status": "categorical"
+      },
+      "quality": {
+        "missing_values": {
+          "CustomerID": 0,
+          "Customer_Segment": 0,
+          "Age": 0,
+          "Region": 0,
+          "Annual_Income": 0,
+          "Total_Spend": 0,
+          "Orders_Count": 0,
+          "Satisfaction_Score": 0,
+          "Churn_Status": 0
+        },
+        "duplicate_rows": "0",
+        "empty_columns": [],
+        "constant_columns": []
+      }
+    },
+    "data/financial_quarterly_performance.csv": {
+      "profile": {
+        "rows": 24,
+        "columns": 7,
+        "column_names": [
+          "Quarter",
+          "Department",
+          "Revenue",
+          "Operating_Expenses",
+          "Net_Profit",
+          "Headcount",
+          "Growth_Rate_Pct"
+        ],
+        "data_types": {
+          "Quarter": "object",
+          "Department": "object",
+          "Revenue": "int64",
+          "Operating_Expenses": "int64",
+          "Net_Profit": "int64",
+          "Headcount": "int64",
+          "Growth_Rate_Pct": "float64"
+        },
+        "missing_values": {
+          "Quarter": 0,
+          "Department": 0,
+          "Revenue": 0,
+          "Operating_Expenses": 0,
+          "Net_Profit": 0,
+          "Headcount": 0,
+          "Growth_Rate_Pct": 0
+        },
+        "duplicate_rows": "0"
+      },
+      "column_classification": {
+        "Quarter": "categorical",
+        "Department": "categorical",
+        "Revenue": "numerical",
+        "Operating_Expenses": "numerical",
+        "Net_Profit": "numerical",
+        "Headcount": "numerical",
+        "Growth_Rate_Pct": "numerical"
+      },
+      "quality": {
+        "missing_values": {
+          "Quarter": 0,
+          "Department": 0,
+          "Revenue": 0,
+          "Operating_Expenses": 0,
+          "Net_Profit": 0,
+          "Headcount": 0,
+          "Growth_Rate_Pct": 0
+        },
+        "duplicate_rows": "0",
+        "empty_columns": [],
+        "constant_columns": []
+      }
     }
   },
   "executions": [
     {
       "query_id": 1,
-      "question": "What is the total Sales?",
-      "resolved_question": "What is the total Sales?",
+      "dataset": "data/test_sales.csv",
+      "question": "What is the total Sales by Category?",
+      "resolved_question": "What is the total Sales by Category?",
       "is_follow_up": false,
-      "generated_code": "result = df[\"Sales\"].sum()",
+      "generated_code": "result = df.groupby(\"Category\")[\"Sales\"].sum()",
       "execution_success": true,
-      "result": "125000",
-      "interpretation": "Analysis result: 125000",
-      "business_insight": "Analysis result: 125000\nThe analysis shows the total Sales for the available data.",
-      "visualization_file": null
-    },
-    {
-      "query_id": 2,
-      "question": "What about Quantity?",
-      "resolved_question": "What is the total Quantity?",
-      "is_follow_up": true,
-      "generated_code": "result = df[\"Quantity\"].sum()",
-      "execution_success": true,
-      "result": "82",
-      "interpretation": "Analysis result: 82",
-      "business_insight": "Analysis result: 82\nThe analysis shows the total Quantity for the available data.",
-      "visualization_file": null
-    },
-    {
-      "query_id": 3,
-      "question": "What is the average Sales by Category?",
-      "resolved_question": "What is the average Sales by Category?",
-      "is_follow_up": false,
-      "generated_code": "result = df.groupby(\"Category\")[\"Sales\"].mean()",
-      "execution_success": true,
-      "result": "Category\nElectronics    33333.333333\nFurniture      12500.000000",
-      "interpretation": "Analysis result: Category\nElectronics    33333.333333\nFurniture      12500.000000\nName: Sales, dtype: float64",
-      "business_insight": "Analysis result: Category\nElectronics    33333.333333\nFurniture      12500.000000\nName: Sales, dtype: float64\nThe analysis shows the average Sales across the available records.",
+      "result": "Category\nElectronics    100000\nFurniture       25000",
+      "interpretation": "Electronics has the highest Sales with 100,000.00.",
+      "business_insight": "Electronics has the highest Sales with 100,000.00.\nElectronics is the strongest-performing Category based on Sales, while Furniture has the lowest value.",
       "visualization_file": "visualizations/sales_by_category.png"
     },
     {
-      "query_id": 4,
+      "query_id": 2,
+      "dataset": "data/test_sales.csv",
+      "question": "What about Quantity?",
+      "resolved_question": "What is the total Quantity by Category?",
+      "is_follow_up": true,
+      "generated_code": "result = df.groupby(\"Category\")[\"Quantity\"].sum()",
+      "execution_success": true,
+      "result": "Category\nElectronics    45\nFurniture      37",
+      "interpretation": "Electronics has the highest Quantity with 45.00.",
+      "business_insight": "Electronics has the highest Quantity with 45.00.\nElectronics is the strongest-performing Category based on Quantity, while Furniture has the lowest value.",
+      "visualization_file": "visualizations/quantity_by_category_followup.png"
+    },
+    {
+      "query_id": 3,
+      "dataset": "data/test_sales.csv",
       "question": "Show the distribution of Quantity",
       "resolved_question": "Show the distribution of Quantity",
       "is_follow_up": false,
       "generated_code": "result = df[\"Quantity\"].describe()",
       "execution_success": true,
       "result": "count     5.000000\nmean     16.400000\nstd       6.107373\nmin      10.000000\n25%      12.000000\n50%      15.000000\n75%      20.000000\nmax      25.000000",
-      "interpretation": "Analysis result: count     5.000000\nmean     16.400000\nstd       6.107373\nmin      10.000000\n25%      12.000000\n50%      15.000000\n75%      20.000000\nmax      25.000000\nName: Quantity, dtype: float64",
-      "business_insight": "Analysis result: count     5.000000\nmean     16.400000\nstd       6.107373\nmin      10.000000\n25%      12.000000\n50%      15.000000\n75%      20.000000\nmax      25.000000\nName: Quantity, dtype: float64\nBusiness insight: Analysis result: count     5.000000\nmean     16.400000\nstd       6.107373\nmin      10.000000\n25%      12.000000\n50%      15.000000\n75%      20.000000\nmax      25.000000\nName: Quantity, dtype: float64",
+      "interpretation": "The Quantity distribution contains 5 records, with an average of 16.40. Values range from 10.00 to 25.00.",
+      "business_insight": "The Quantity distribution contains 5 records, with an average of 16.40. Values range from 10.00 to 25.00.\nBusiness insight: The Quantity distribution contains 5 records, with an average of 16.40. Values range from 10.00 to 25.00.",
       "visualization_file": "visualizations/quantity_distribution.png"
     },
     {
-      "query_id": 5,
+      "query_id": 4,
+      "dataset": "data/test_sales.csv",
       "question": "What is the relationship between Sales and Quantity?",
       "resolved_question": "What is the relationship between Sales and Quantity?",
       "is_follow_up": false,
       "generated_code": "result = df[[\"Sales\", \"Quantity\"]].corr()",
       "execution_success": true,
       "result": "             Sales  Quantity\nSales     1.000000 -0.569558\nQuantity -0.569558  1.000000",
-      "interpretation": "Analysis result:              Sales  Quantity\nSales     1.000000 -0.569558\nQuantity -0.569558  1.000000",
-      "business_insight": "Analysis result:              Sales  Quantity\nSales     1.000000 -0.569558\nQuantity -0.569558  1.000000\nThe analysis examines the relationship between Sales and Quantity.",
+      "interpretation": "Sales and Quantity have a moderate negative relationship with a correlation of -0.57.",
+      "business_insight": "Sales and Quantity have a moderate negative relationship with a correlation of -0.57.\nSales and Quantity show a moderate negative relationship in the analyzed data.",
       "visualization_file": "visualizations/sales_quantity_correlation.png"
     },
     {
-      "query_id": 6,
+      "query_id": 5,
+      "dataset": "data/trend_sales.csv",
       "question": "Sales trend over Date",
       "resolved_question": "Sales trend over Date",
       "is_follow_up": false,
       "generated_code": "result = df.groupby(\"Date\")[\"Sales\"].sum()",
       "execution_success": true,
       "result": "Date\n2026-01-01    10000\n2026-02-01    15000\n2026-03-01    20000\n2026-04-01    25000\n2026-05-01    30000",
-      "interpretation": "Analysis result: Date\n2026-01-01    10000\n2026-02-01    15000\n2026-03-01    20000\n2026-04-01    25000\n2026-05-01    30000\nName: Sales, dtype: int64",
-      "business_insight": "Analysis result: Date\n2026-01-01    10000\n2026-02-01    15000\n2026-03-01    20000\n2026-04-01    25000\n2026-05-01    30000\nName: Sales, dtype: int64\nBusiness insight: Analysis result: Date\n2026-01-01    10000\n2026-02-01    15000\n2026-03-01    20000\n2026-04-01    25000\n2026-05-01    30000\nName: Sales, dtype: int64",
+      "interpretation": "Sales shows an increasing trend, rising from 10,000.00 to 30,000.00.",
+      "business_insight": "Sales shows an increasing trend, rising from 10,000.00 to 30,000.00.\nSales is showing consistent growth across the analyzed period.",
       "visualization_file": "visualizations/sales_trend_over_date.png"
+    },
+    {
+      "query_id": 6,
+      "dataset": "data/ecommerce_customer_churn.csv",
+      "question": "What is the total Total_Spend by Customer_Segment?",
+      "resolved_question": "What is the total Total_Spend by Customer_Segment?",
+      "is_follow_up": false,
+      "generated_code": "result = df.groupby(\"Customer_Segment\")[\"Total_Spend\"].sum()",
+      "execution_success": true,
+      "result": "Customer_Segment\nEnterprise    81200\nPremium       41600\nStandard      13850",
+      "interpretation": "Enterprise has the highest Total_Spend with 81,200.00.",
+      "business_insight": "Enterprise has the highest Total_Spend with 81,200.00.\nEnterprise is the strongest-performing Customer_Segment based on Total_Spend, while Standard has the lowest value.",
+      "visualization_file": "visualizations/churn_spend_by_segment.png"
+    },
+    {
+      "query_id": 7,
+      "dataset": "data/ecommerce_customer_churn.csv",
+      "question": "What about Annual_Income?",
+      "resolved_question": "What is the total Annual_Income by Customer_Segment?",
+      "is_follow_up": true,
+      "generated_code": "result = df.groupby(\"Customer_Segment\")[\"Annual_Income\"].sum()",
+      "execution_success": true,
+      "result": "Customer_Segment\nEnterprise    1005000\nPremium        787000\nStandard       538000",
+      "interpretation": "Enterprise has the highest Annual_Income with 1,005,000.00.",
+      "business_insight": "Enterprise has the highest Annual_Income with 1,005,000.00.\nEnterprise is the strongest-performing Customer_Segment based on Annual_Income, while Standard has the lowest value.",
+      "visualization_file": "visualizations/churn_income_followup.png"
+    },
+    {
+      "query_id": 8,
+      "dataset": "data/ecommerce_customer_churn.csv",
+      "question": "What is the average Satisfaction_Score by Region?",
+      "resolved_question": "What is the average Satisfaction_Score by Region?",
+      "is_follow_up": false,
+      "generated_code": "result = df.groupby(\"Region\")[\"Satisfaction_Score\"].mean()",
+      "execution_success": true,
+      "result": "Region\nEast     3.785714\nNorth    3.988889\nSouth    3.771429\nWest     3.942857",
+      "interpretation": "North has the highest average Satisfaction_Score with 3.99.",
+      "business_insight": "North has the highest average Satisfaction_Score with 3.99.\nNorth is the strongest-performing Region based on Satisfaction_Score, while South has the lowest value.",
+      "visualization_file": "visualizations/churn_satisfaction_by_region.png"
+    },
+    {
+      "query_id": 9,
+      "dataset": "data/financial_quarterly_performance.csv",
+      "question": "What is the average Revenue by Department?",
+      "resolved_question": "What is the average Revenue by Department?",
+      "is_follow_up": false,
+      "generated_code": "result = df.groupby(\"Department\")[\"Revenue\"].mean()",
+      "execution_success": true,
+      "result": "Department\nEngineering    195833.333333\nMarketing      125000.000000\nOperations      92333.333333\nSales          289166.666667",
+      "interpretation": "Sales has the highest average Revenue with 289,166.67.",
+      "business_insight": "Sales has the highest average Revenue with 289,166.67.\nSales is the strongest-performing Department based on Revenue, while Operations has the lowest value.",
+      "visualization_file": "visualizations/financial_revenue_by_department.png"
+    },
+    {
+      "query_id": 10,
+      "dataset": "data/financial_quarterly_performance.csv",
+      "question": "What about Operating_Expenses?",
+      "resolved_question": "What is the average Operating_Expenses by Department?",
+      "is_follow_up": true,
+      "generated_code": "result = df.groupby(\"Department\")[\"Operating_Expenses\"].mean()",
+      "execution_success": true,
+      "result": "Department\nEngineering    107000.000000\nMarketing       81333.333333\nOperations      68500.000000\nSales          154166.666667",
+      "interpretation": "Sales has the highest average Operating_Expenses with 154,166.67.",
+      "business_insight": "Sales has the highest average Operating_Expenses with 154,166.67.\nSales is the strongest-performing Department based on Operating_Expenses, while Operations has the lowest value.",
+      "visualization_file": "visualizations/financial_expenses_followup.png"
+    },
+    {
+      "query_id": 11,
+      "dataset": "data/financial_quarterly_performance.csv",
+      "question": "Revenue trend over Quarter",
+      "resolved_question": "Revenue trend over Quarter",
+      "is_follow_up": false,
+      "generated_code": "result = df.groupby(\"Quarter\")[\"Revenue\"].sum()",
+      "execution_success": true,
+      "result": "Quarter\n2024-Q1    545000\n2024-Q2    599000\n2024-Q3    657000\n2024-Q4    750000\n2025-Q1    797000\n2025-Q2    866000",
+      "interpretation": "Revenue shows an increasing trend, rising from 545,000.00 to 866,000.00.",
+      "business_insight": "Revenue shows an increasing trend, rising from 545,000.00 to 866,000.00.\nRevenue is showing consistent growth across the analyzed period.",
+      "visualization_file": "visualizations/financial_revenue_trend.png"
     }
   ]
 }
