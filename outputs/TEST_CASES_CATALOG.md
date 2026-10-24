@@ -6,8 +6,8 @@ This catalog outlines all verified test suites and standalone verification scrip
 
 ## 1. Unit Test Suite Summary
 
-- **Total Test Cases Executed:** 51
-- **Passing:** 51 (100%)
+- **Total Test Cases Executed:** 56
+- **Passing:** 56 (100%)
 - **Failing / Errors:** 0
 - **Runner Command:** `python -m unittest discover -s tests`
 - **Output Artifact:** [`outputs/unit_test_results.txt`](./unit_test_results.txt)
@@ -113,6 +113,17 @@ Tests dynamic follow-up metric switching across non-standard column names, group
 | `test_filter_followup` | Filter injection | *"What about for East?"* | Adds conditional filter clause to query | Passed |
 | `test_memory_structured_storage` | Structured multi-turn state | Plan dict and metadata tracking | Generates structured session narrative summary | Passed |
 | `test_followup_detector_expanded` | Conversational phrases | *"by Department?"*, *"now by Segment"* | Accurately identifies conversational follow-ups | Passed |
+
+---
+
+### 2.7 Natural Language Query Robustness (`tests/test_nlp_queries.py`)
+| Test Method | Input / Condition | Query Tested | Expected Behavior | Status |
+|---|---|---|---|---|
+| `test_bare_column_query` | Direct metric name | `"net_profit"` | Resolves to summary statistics, computes count, mean, min, max | Passed |
+| `test_bare_column_case_insensitive` | Mixed case metric | `"Net_Profit"` | Case-insensitive matching, returns summary stats | Passed |
+| `test_column_with_group_by` | Metric by category without explicit verb | `"net_profit by Department"` | Defaults aggregation to `sum`, breaks down by department | Passed |
+| `test_natural_phrasing` | Conversational phrasing | `"what is net profit"` | Automatically identifies metric and provides summary | Passed |
+| `test_unknown_query_guidance` | Unrecognizable terms | `"completely_random_unknown_words"` | Gracefully returns available columns and query templates | Passed |
 
 ---
 
