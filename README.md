@@ -5,7 +5,7 @@ An autonomous, multi-agent AI framework for tabular business data analysis. The 
 [![Python](https://img.shields.io/badge/Python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![Framework](https://img.shields.io/badge/UI-Streamlit-FF4B4B.svg)](https://streamlit.io/)
 [![Data Engine](https://img.shields.io/badge/Data-Pandas%20%7C%20NumPy-150458.svg)](https://pandas.pydata.org/)
-[![Tests](https://img.shields.io/badge/Tests-45%20Passing-brightgreen.svg)](outputs/TEST_CASES_CATALOG.md)
+[![Tests](https://img.shields.io/badge/Tests-51%20Passing-brightgreen.svg)](outputs/TEST_CASES_CATALOG.md)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
@@ -82,11 +82,13 @@ flowchart TD
 │       └── visualizer.py           # Matplotlib / Altair chart generator
 ├── data/                           # Verified sample datasets
 │   ├── test_sales.csv              # Categorical and numerical business data
-│   └── trend_sales.csv             # Time-series sales data
+│   ├── trend_sales.csv             # Time-series sales data
+│   ├── ecommerce_customer_churn.csv # E-commerce customer churn, spend & satisfaction records
+│   └── financial_quarterly_performance.csv # Multi-department quarterly financial performance
 ├── docs/
 │   └── EXECUTION_GUIDE.md          # Comprehensive step-by-step execution guide
 ├── outputs/                        # Test logs, execution outputs & generated charts
-│   ├── TEST_CASES_CATALOG.md       # Detailed catalog of all 45 unit tests
+│   ├── TEST_CASES_CATALOG.md       # Detailed catalog of all 51 unit tests
 │   ├── sample_analysis_outputs.md  # Real execution logs across sample queries
 │   ├── sample_analysis_outputs.json# Machine-readable execution logs
 │   ├── unit_test_results.txt       # Unit test runner terminal output
@@ -129,14 +131,14 @@ Open **`http://localhost:8501`** in your browser.
 
 ## 🧪 Testing & Verification
 
-The project includes 45 unit tests covering NLU, planning, code generation, execution recovery, and multi-turn context resolution:
+The project includes 51 unit tests covering NLU, planning, code generation, execution recovery, and multi-turn context resolution:
 
 ```powershell
 # Run the complete test suite
 python -m unittest discover -s tests
 ```
 
-- **Test Suite Results:** 45 tests, 0 failures, 100% pass rate.
+- **Test Suite Results:** 51 tests, 0 failures, 100% pass rate.
 - View the complete test catalog in [outputs/TEST_CASES_CATALOG.md](outputs/TEST_CASES_CATALOG.md).
 - View verified end-to-end execution logs and generated plots in [outputs/sample_analysis_outputs.md](outputs/sample_analysis_outputs.md).
 
@@ -145,8 +147,8 @@ python -m unittest discover -s tests
 ## 📖 Documentation
 
 - 📘 **[Execution Guide](docs/EXECUTION_GUIDE.md):** Detailed guide on environment configuration, deployment, UI features, and troubleshooting.
-- 📋 **[Test Cases Catalog](outputs/TEST_CASES_CATALOG.md):** Breakdown of all 45 test cases categorized by component.
-- 📊 **[Sample Outputs & Plots](outputs/sample_analysis_outputs.md):** Real execution runs, generated code, business insights, and visualization figures.
+- 📋 **[Test Cases Catalog](outputs/TEST_CASES_CATALOG.md):** Breakdown of all 51 test cases categorized by component.
+- 📊 **[Sample Outputs & Plots](outputs/sample_analysis_outputs.md):** Real execution runs across 4 datasets, generated code, business insights, and visualization figures.
 
 ---
 

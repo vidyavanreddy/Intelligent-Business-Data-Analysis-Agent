@@ -86,6 +86,8 @@ The web dashboard is organized into 3 sequential sections:
 - **Included Sample Data:**
   - `data/test_sales.csv`: Categorical & numeric metrics (Products, Category, Sales, Quantity)
   - `data/trend_sales.csv`: Time-series sales data (Date, Sales, Quantity)
+  - `data/ecommerce_customer_churn.csv`: E-commerce customer churn, spend & satisfaction records
+  - `data/financial_quarterly_performance.csv`: Multi-department quarterly financial performance metrics
 - **Automated Dataset Understanding:**
   Upon upload, the data loader automatically analyzes:
   - Dataset dimensions (rows & columns)
@@ -125,7 +127,7 @@ The agent maintains context across questions:
 
 ## 5. Running Automated Unit Tests
 
-The repository contains 45 automated unit tests with 100% pass coverage.
+The repository contains 51 automated unit tests with 100% pass coverage.
 
 ### Run All Unit Tests:
 ```powershell
