@@ -38,7 +38,7 @@ def generate_code(plan):
     # ---------------------------------
     elif analysis_type == "aggregation":
 
-        if operation == "sum":
+        if operation == "sum" or operation is None:
 
             return f'result = {data}["{target_column}"].sum()'
 
@@ -64,7 +64,7 @@ def generate_code(plan):
 
         else:
 
-            raise ValueError("Unsupported aggregation operation.")
+            return f'result = {data}["{target_column}"].sum()'
 
     # ---------------------------------
     # Grouped Aggregation
@@ -77,7 +77,7 @@ def generate_code(plan):
                 "Grouped aggregation requires a grouping column."
             )
 
-        if operation == "sum":
+        if operation == "sum" or operation is None:
 
             return (
                 f'result = {data}.groupby("{group_by}")'
@@ -121,8 +121,27 @@ def generate_code(plan):
 
         else:
 
-            raise ValueError("Unsupported aggregation operation.")
+            return (
+                f'result = {data}.groupby("{group_by}")'
+                f'["{target_column}"].sum()'
+            )
 
+    # ---------------------------------
+    # Comparison
+    # ---------------------------------
+    elif analysis_type == "comparison":
+
+        if group_by:
+            return (
+                f'result = {data}.groupby("{group_by}")'
+                f'["{target_column}"].sum()'
+            )
+
+        return f'result = {data}["{target_column}"].describe()'
+
+    # ---------------------------------
+    # Trend
+    # ---------------------------------
     elif analysis_type == "trend":
 
         if time is None:
@@ -151,9 +170,12 @@ def generate_code(plan):
         )
 
     # ---------------------------------
-    # Unsupported Analysis Type
+    # Fallback / Unsupported Analysis Type
     # ---------------------------------
     else:
+
+        if target_column:
+            return f'result = {data}["{target_column}"].describe()'
 
         raise ValueError(
             f"Unsupported analysis type: {analysis_type}"

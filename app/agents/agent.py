@@ -62,6 +62,24 @@ class AnalysisAgent:
             self.state.nlu_result
         )
 
+        if self.state.analysis_plan.analysis_type == "unknown" or (
+            self.state.analysis_plan.target_column is None and self.state.analysis_plan.group_by is None
+        ):
+            first_col = columns[0] if columns else "Sales"
+            second_col = columns[1] if len(columns) > 1 else first_col
+            self.state.error = (
+                f"Could not identify a valid column or operation in '{question}'.\n\n"
+                f"Available dataset columns: {', '.join(columns)}.\n\n"
+                "Suggested question formats:\n"
+                f"• '{first_col}' (overview/summary)\n"
+                f"• 'Total {first_col}' or 'Average {first_col}'\n"
+                f"• '{first_col} by {second_col}'\n"
+                f"• 'Show distribution of {first_col}'\n"
+                f"• 'Relationship between {first_col} and {second_col}'"
+            )
+            self.state.error_type = "unrecognized_query"
+            return self.state
+
         try:
             self.state.generated_code = generate_code(
                 self.state.analysis_plan.to_dict()
