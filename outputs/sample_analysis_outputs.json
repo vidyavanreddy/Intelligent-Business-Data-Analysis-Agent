@@ -1,0 +1,157 @@
+{
+  "datasets": {
+    "test_sales.csv": {
+      "profile": {
+        "rows": 5,
+        "columns": 4,
+        "column_names": [
+          "Product",
+          "Category",
+          "Sales",
+          "Quantity"
+        ],
+        "data_types": {
+          "Product": "object",
+          "Category": "object",
+          "Sales": "int64",
+          "Quantity": "int64"
+        },
+        "missing_values": {
+          "Product": 0,
+          "Category": 0,
+          "Sales": 0,
+          "Quantity": 0
+        },
+        "duplicate_rows": "0"
+      },
+      "column_classification": {
+        "Product": "categorical",
+        "Category": "categorical",
+        "Sales": "numerical",
+        "Quantity": "numerical"
+      },
+      "quality": {
+        "missing_values": {
+          "Product": 0,
+          "Category": 0,
+          "Sales": 0,
+          "Quantity": 0
+        },
+        "duplicate_rows": "0",
+        "empty_columns": [],
+        "constant_columns": []
+      }
+    },
+    "trend_sales.csv": {
+      "profile": {
+        "rows": 5,
+        "columns": 3,
+        "column_names": [
+          "Date",
+          "Sales",
+          "Quantity"
+        ],
+        "data_types": {
+          "Date": "object",
+          "Sales": "int64",
+          "Quantity": "int64"
+        },
+        "missing_values": {
+          "Date": 0,
+          "Sales": 0,
+          "Quantity": 0
+        },
+        "duplicate_rows": "0"
+      },
+      "column_classification": {
+        "Date": "categorical",
+        "Sales": "numerical",
+        "Quantity": "numerical"
+      },
+      "quality": {
+        "missing_values": {
+          "Date": 0,
+          "Sales": 0,
+          "Quantity": 0
+        },
+        "duplicate_rows": "0",
+        "empty_columns": [],
+        "constant_columns": []
+      }
+    }
+  },
+  "executions": [
+    {
+      "query_id": 1,
+      "question": "What is the total Sales?",
+      "resolved_question": "What is the total Sales?",
+      "is_follow_up": false,
+      "generated_code": "result = df[\"Sales\"].sum()",
+      "execution_success": true,
+      "result": "125000",
+      "interpretation": "Analysis result: 125000",
+      "business_insight": "Analysis result: 125000\nThe analysis shows the total Sales for the available data.",
+      "visualization_file": null
+    },
+    {
+      "query_id": 2,
+      "question": "What about Quantity?",
+      "resolved_question": "What is the total Quantity?",
+      "is_follow_up": true,
+      "generated_code": "result = df[\"Quantity\"].sum()",
+      "execution_success": true,
+      "result": "82",
+      "interpretation": "Analysis result: 82",
+      "business_insight": "Analysis result: 82\nThe analysis shows the total Quantity for the available data.",
+      "visualization_file": null
+    },
+    {
+      "query_id": 3,
+      "question": "What is the average Sales by Category?",
+      "resolved_question": "What is the average Sales by Category?",
+      "is_follow_up": false,
+      "generated_code": "result = df.groupby(\"Category\")[\"Sales\"].mean()",
+      "execution_success": true,
+      "result": "Category\nElectronics    33333.333333\nFurniture      12500.000000",
+      "interpretation": "Analysis result: Category\nElectronics    33333.333333\nFurniture      12500.000000\nName: Sales, dtype: float64",
+      "business_insight": "Analysis result: Category\nElectronics    33333.333333\nFurniture      12500.000000\nName: Sales, dtype: float64\nThe analysis shows the average Sales across the available records.",
+      "visualization_file": "visualizations/sales_by_category.png"
+    },
+    {
+      "query_id": 4,
+      "question": "Show the distribution of Quantity",
+      "resolved_question": "Show the distribution of Quantity",
+      "is_follow_up": false,
+      "generated_code": "result = df[\"Quantity\"].describe()",
+      "execution_success": true,
+      "result": "count     5.000000\nmean     16.400000\nstd       6.107373\nmin      10.000000\n25%      12.000000\n50%      15.000000\n75%      20.000000\nmax      25.000000",
+      "interpretation": "Analysis result: count     5.000000\nmean     16.400000\nstd       6.107373\nmin      10.000000\n25%      12.000000\n50%      15.000000\n75%      20.000000\nmax      25.000000\nName: Quantity, dtype: float64",
+      "business_insight": "Analysis result: count     5.000000\nmean     16.400000\nstd       6.107373\nmin      10.000000\n25%      12.000000\n50%      15.000000\n75%      20.000000\nmax      25.000000\nName: Quantity, dtype: float64\nBusiness insight: Analysis result: count     5.000000\nmean     16.400000\nstd       6.107373\nmin      10.000000\n25%      12.000000\n50%      15.000000\n75%      20.000000\nmax      25.000000\nName: Quantity, dtype: float64",
+      "visualization_file": "visualizations/quantity_distribution.png"
+    },
+    {
+      "query_id": 5,
+      "question": "What is the relationship between Sales and Quantity?",
+      "resolved_question": "What is the relationship between Sales and Quantity?",
+      "is_follow_up": false,
+      "generated_code": "result = df[[\"Sales\", \"Quantity\"]].corr()",
+      "execution_success": true,
+      "result": "             Sales  Quantity\nSales     1.000000 -0.569558\nQuantity -0.569558  1.000000",
+      "interpretation": "Analysis result:              Sales  Quantity\nSales     1.000000 -0.569558\nQuantity -0.569558  1.000000",
+      "business_insight": "Analysis result:              Sales  Quantity\nSales     1.000000 -0.569558\nQuantity -0.569558  1.000000\nThe analysis examines the relationship between Sales and Quantity.",
+      "visualization_file": "visualizations/sales_quantity_correlation.png"
+    },
+    {
+      "query_id": 6,
+      "question": "Sales trend over Date",
+      "resolved_question": "Sales trend over Date",
+      "is_follow_up": false,
+      "generated_code": "result = df.groupby(\"Date\")[\"Sales\"].sum()",
+      "execution_success": true,
+      "result": "Date\n2026-01-01    10000\n2026-02-01    15000\n2026-03-01    20000\n2026-04-01    25000\n2026-05-01    30000",
+      "interpretation": "Analysis result: Date\n2026-01-01    10000\n2026-02-01    15000\n2026-03-01    20000\n2026-04-01    25000\n2026-05-01    30000\nName: Sales, dtype: int64",
+      "business_insight": "Analysis result: Date\n2026-01-01    10000\n2026-02-01    15000\n2026-03-01    20000\n2026-04-01    25000\n2026-05-01    30000\nName: Sales, dtype: int64\nBusiness insight: Analysis result: Date\n2026-01-01    10000\n2026-02-01    15000\n2026-03-01    20000\n2026-04-01    25000\n2026-05-01    30000\nName: Sales, dtype: int64",
+      "visualization_file": "visualizations/sales_trend_over_date.png"
+    }
+  ]
+}

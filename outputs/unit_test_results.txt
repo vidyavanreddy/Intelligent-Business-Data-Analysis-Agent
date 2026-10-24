@@ -1,0 +1,57 @@
+=== INTELLIGENT BUSINESS DATA ANALYSIS AGENT - TEST SUITE RUN ===
+Total Tests Run: 45
+Failures: 0
+Errors: 0
+Was Successful: True
+
+--- Detailed Log ---
+test_agent_run_attempts_recovery (test_agent_recovery.TestAgentRecovery) ... ok
+test_recovery_attempted_on_execution_error (test_agent_recovery.TestAgentRecovery) ... ok
+test_recovery_handles_key_error (test_agent_recovery.TestAgentRecovery) ... ok
+test_recovery_handles_missing_result (test_agent_recovery.TestAgentRecovery) ... ok
+test_recovery_retries_execution (test_agent_recovery.TestAgentRecovery) ... ok
+test_recovery_retries_execution_with_mock (test_agent_recovery.TestAgentRecovery) ... ok
+test_error_type_initially_none (test_agent_state.TestAgentState) ... ok
+test_specific_error_type (test_agent_state.TestAgentState) ... ok
+test_also_question (test_context_resolver.TestContextResolver) ... ok
+test_and_question (test_context_resolver.TestContextResolver) ... ok
+test_grouped_question (test_context_resolver.TestContextResolver) ... ok
+test_how_about (test_context_resolver.TestContextResolver) ... ok
+test_new_question (test_context_resolver.TestContextResolver) ... ok
+test_no_previous_question (test_context_resolver.TestContextResolver) ... ok
+test_replace_metric_in_distribution_question (test_context_resolver.TestContextResolver) ... ok
+test_replace_metric_with_profit (test_context_resolver.TestContextResolver) ... ok
+test_what_about (test_context_resolver.TestContextResolver) ... ok
+test_and_follow_up (test_conversation_context.TestConversationContext) ... ok
+test_follow_up_question (test_conversation_context.TestConversationContext) ... ok
+test_grouped_follow_up (test_conversation_context.TestConversationContext) ... ok
+test_new_question (test_conversation_context.TestConversationContext) ... ok
+test_previous_question_is_returned (test_conversation_context.TestConversationContext) ... ok
+test_also_question (test_followup_detector.TestFollowUpDetector) ... ok
+test_and_quantity_question (test_followup_detector.TestFollowUpDetector) ... ok
+test_case_insensitive_question (test_followup_detector.TestFollowUpDetector) ... ok
+test_empty_question (test_followup_detector.TestFollowUpDetector) ... ok
+test_how_about_question (test_followup_detector.TestFollowUpDetector) ... ok
+test_new_question (test_followup_detector.TestFollowUpDetector) ... ok
+test_no_previous_question (test_followup_detector.TestFollowUpDetector) ... ok
+test_what_about_question (test_followup_detector.TestFollowUpDetector) ... ok
+test_add_and_get_last (test_memory.TestConversationMemory) ... ok
+test_add_stores_follow_up_information (test_memory.TestConversationMemory) ... ok
+test_clear_memory (test_memory.TestConversationMemory) ... ok
+test_empty_memory (test_memory.TestConversationMemory) ... ok
+test_get_previous_question (test_memory.TestConversationMemory) ... ok
+test_get_previous_result_and_interpretation (test_memory.TestConversationMemory) ... ok
+test_multiple_entries (test_memory.TestConversationMemory) ... ok
+test_intent_detection (test_nlu.TestNLU) ... ok
+test_invalid_filter_column (test_nlu.TestNLU) ... ok
+test_invalid_group_by (test_nlu.TestNLU) ... ok
+test_metric_extraction (test_nlu.TestNLU) ... ok
+test_missing_metric (test_nlu.TestNLU) ... ok
+test_nlu_validation (test_nlu.TestNLU) ... ok
+test_operation_extraction (test_nlu.TestNLU) ... ok
+test_question_parser (test_nlu.TestNLU) ... ok
+
+----------------------------------------------------------------------
+Ran 45 tests in 0.007s
+
+OK
