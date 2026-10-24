@@ -1,10 +1,22 @@
 === INTELLIGENT BUSINESS DATA ANALYSIS AGENT - TEST SUITE RUN ===
-Total Tests Run: 45
+Total Tests Run: 51
 Failures: 0
 Errors: 0
 Was Successful: True
 
 --- Detailed Log ---
+test_dynamic_metric_switch (test_advanced_memory.TestAdvancedMemory)
+Test resolving metric not in the original 5 hardcoded names. ... ok
+test_filter_followup (test_advanced_memory.TestAdvancedMemory)
+Test adding filter in follow-up. ... ok
+test_followup_detector_expanded_patterns (test_advanced_memory.TestAdvancedMemory)
+Test expanded conversational connectors. ... ok
+test_groupby_switch (test_advanced_memory.TestAdvancedMemory)
+Test changing grouping dimension in follow-up. ... ok
+test_memory_structured_storage_and_summary (test_advanced_memory.TestAdvancedMemory)
+Test structured metadata storage and multi-turn session summary. ... ok
+test_operation_switch (test_advanced_memory.TestAdvancedMemory)
+Test changing operation from total to average in follow-up. ... ok
 test_agent_run_attempts_recovery (test_agent_recovery.TestAgentRecovery) ... ok
 test_recovery_attempted_on_execution_error (test_agent_recovery.TestAgentRecovery) ... ok
 test_recovery_handles_key_error (test_agent_recovery.TestAgentRecovery) ... ok
@@ -52,6 +64,6 @@ test_operation_extraction (test_nlu.TestNLU) ... ok
 test_question_parser (test_nlu.TestNLU) ... ok
 
 ----------------------------------------------------------------------
-Ran 45 tests in 0.007s
+Ran 51 tests in 0.009s
 
 OK

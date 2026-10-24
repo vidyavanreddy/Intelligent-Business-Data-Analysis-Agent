@@ -6,8 +6,8 @@ This catalog outlines all verified test suites and standalone verification scrip
 
 ## 1. Unit Test Suite Summary
 
-- **Total Test Cases Executed:** 45
-- **Passing:** 45 (100%)
+- **Total Test Cases Executed:** 51
+- **Passing:** 51 (100%)
 - **Failing / Errors:** 0
 - **Runner Command:** `python -m unittest discover -s tests`
 - **Output Artifact:** [`outputs/unit_test_results.txt`](./unit_test_results.txt)
@@ -100,6 +100,19 @@ Tests automated generation of Pandas code and AST syntax validation.
 | `test_code_generator.py` | Generates summary, distribution, aggregation, correlation, and filtering code | `result = df["Sales"].sum()` | Passed |
 | `test_code_validator.py` | AST validation to prevent code injection and syntax errors | Valid: `True`, Invalid: `False` | Passed |
 | `test_code_pipeline.py` | End-to-end plan-to-code generation and verification | `result = df.groupby("Region")["Sales"].sum()` | Passed |
+
+---
+
+### H. Advanced Memory & Dynamic Context Resolution (`tests/test_advanced_memory.py`)
+Tests dynamic follow-up metric switching across non-standard column names, group dimension changes, operation switches, and multi-turn session summary generation.
+| Test Case | Scenario Tested | Input Follow-up | Expected Result | Status |
+|:---|:---|:---|:---|:---:|
+| `test_dynamic_metric_switch` | Metric switch on custom column names | *"What about Total_Spend?"* | Replaces `Annual_Income` with `Total_Spend` keeping group-by intact | Passed |
+| `test_groupby_switch` | Dimension switch | *"What about by Region?"* | Replaces `Category` with `Region` preserving metric | Passed |
+| `test_operation_switch` | Aggregation operation switch | *"What about the average?"* | Changes `total` to `average` preserving dimension and metric | Passed |
+| `test_filter_followup` | Filter injection | *"What about for East?"* | Adds conditional filter clause to query | Passed |
+| `test_memory_structured_storage` | Structured multi-turn state | Plan dict and metadata tracking | Generates structured session narrative summary | Passed |
+| `test_followup_detector_expanded` | Conversational phrases | *"by Department?"*, *"now by Segment"* | Accurately identifies conversational follow-ups | Passed |
 
 ---
 
